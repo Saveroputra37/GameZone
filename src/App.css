@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+body{
+    width: 100%;
+    height: 100vh;
+    background: #0f101f;
+}
+
+
+
+
+@theme {
+  /* Menggunakan palette warna zinc yang elegan untuk dark mode */
+  --color-bg-dark: #09090b; /* zinc-950 */
+  --color-card-dark: #18181b; /* zinc-900 */
+  --color-border-dark: #27272a; /* zinc-800 */
+  
+  /* Warna Aksen (misal: Hijau Emerald) */
+  --color-primary: #10b981; /* emerald-500 */
+  --color-primary-hover: #059669; /* emerald-600 */
+
+  --color-text-main: #fafafa; /* zinc-50 */
+  --color-text-muted: #a1a1aa; /* zinc-400 */
+}
+
+/* Opsional: Font Smoothing */
+@layer base {
+  body {
+    @apply bg-bg-dark text-text-main antialiased;
+  }
+}
