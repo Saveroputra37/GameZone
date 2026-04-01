@@ -1,37 +1,27 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 import "./App.css";
 
-
-// Import Pages
-import Layoutlogin from "./pages/login/layoutlogin";
+// Import Pages (Gunakan PascalCase untuk nama komponen)
+import LayoutLogin from "./pages/login/layoutlogin"; // Sesuaikan jika nama file aslinya layoutlogin.jsx
 import Home from "./pages/home/home";
+import FAQPage from "./pages/FAQ/FormQuestion"; // Pastikan folder FAQ dan file FormQuestion ada
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Route Publik: Bisa diakses siapa saja */}
-        <Route path="/login" element={<Layoutlogin />} />
+        {/* 1. Halaman Login & Signup (Gabungan) */}
+        <Route path="/login" element={<LayoutLogin />} />
 
-        {/* Route Terproteksi: Hanya untuk user yang sudah login */}
-        <Route
-          path="/"
-          element={
-            <>
-              <SignedIn>
-                <Home />
-              </SignedIn>
-              <SignedOut>
-                <RedirectToSignIn />
-              </SignedOut>
-            </>
-          }
-        />
+        {/* 2. Halaman Utama (Beranda) */}
+        <Route path="/" element={<Home />} />
 
-        {/* Catch-all: Redirect ke home jika route tidak ada */}
-        <Route path="*" element={<Navigate to="/" />} />
+        {/* 3. Halaman Bantuan (FAQ & Contact) */}
+        <Route path="/faq" element={<FAQPage />} />
+
+        {/* 4. Catch-all: Jika user mengetik URL ngawur, arahkan ke Home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
