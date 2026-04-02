@@ -1,14 +1,16 @@
 import { supabase } from "../SupabaseConfig";
 
-// Fungsi murni untuk ambil data
 export const fetchCategories = async () => {
+  // Kita ambil dari tabel 'categories' karena datanya ada di situ
   const { data, error } = await supabase
     .from("categories")
-    .select("*")
-    .order("name", { ascending: true }); // Opsional: urutkan abjad
+    .select("*") // Mengambil id, name, image_url, slug, category_type, is_popular, description
+    .order("name", { ascending: true });
 
-  if (error) throw new Error(error.message);
-  return data;
-};
+  if (error) {
+    console.error("Supabase Error:", error.message);
+    throw new Error(error.message);
+  }
 
-// Kamu bisa tambah fungsi lain di sini nanti, misal: fetchProductsByGame(id)
+  return data || [];
+};;

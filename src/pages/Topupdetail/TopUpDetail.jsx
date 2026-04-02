@@ -47,7 +47,7 @@ const TopUpDetail = () => {
           className="w-full h-full object-cover opacity-20 blur-sm scale-110"
           alt=""
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0c14] via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-[#0b0c14] via-transparent to-transparent" />
       </div>
 
       <div className="max-w-6xl mx-auto px-4 -mt-32 relative z-10 pb-20">
@@ -57,12 +57,12 @@ const TopUpDetail = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white/[0.03] backdrop-blur-xl p-6 rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden relative"
+              className="bg-white/3 backdrop-blur-xl p-6 rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden relative"
             >
               {/* Aksen Cahaya di Background agar tidak sepi */}
               <div className="absolute -top-20 -left-20 w-40 h-40 bg-orange-500/10 blur-[80px] rounded-full" />
 
-              <div className="flex flex-row lg:flex-col items-center lg:items-start gap-5">
+              <div className="flex flex-row  items-center lg:items-start gap-5">
                 {/* GAMBAR UKURAN KECIL & ESTETIK */}
                 <div className="relative flex-none">
                   <div className="w-20 h-20 lg:w-32 lg:h-32 rounded-3xl overflow-hidden border-2 border-white/10 shadow-2xl transform lg:-rotate-3 group-hover:rotate-0 transition-transform duration-500">
@@ -74,7 +74,7 @@ const TopUpDetail = () => {
                       />
                     ) : (
                       /* Placeholder jika gambar kosong */
-                      <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center text-2xl font-black text-white/20">
+                      <div className="w-full h-full bg-linear-to-br from-gray-800 to-gray-900 flex items-center justify-center text-2xl font-black text-white/20">
                         {game?.name?.charAt(0)}
                       </div>
                     )}
@@ -99,19 +99,23 @@ const TopUpDetail = () => {
                 </div>
               </div>
 
-              <p className="hidden lg:block text-xs text-slate-500 leading-relaxed border-t border-white/5 pt-5 mt-5 italic">
-                "Layanan pengisian instan 24 jam. Pastikan data akun sudah
-                sesuai sebelum melakukan pembayaran."
-              </p>
+              <div className="mt-6 pt-6 border-t border-white/5 relative z-10">
+                <p className="text-xs md:text-sm text-slate-400 leading-relaxed italic">
+                  "
+                  {game?.description ||
+                    "Layanan top up instan dan terpercaya. Pastikan ID akun sudah benar sebelum melakukan transaksi."}
+                  "
+                </p>
+              </div>
             </motion.div>
           </div>
 
           {/* SISI KANAN: FLOW TOPUP */}
           <div className="lg:col-span-8 space-y-8">
             {/* STEP 1: AKUN */}
-            <section className="bg-white/[0.02] p-8 rounded-[2.5rem] border border-white/5">
+            <section className="bg-white/2 p-8 rounded-[2.5rem] border border-white/5">
               <div className="flex items-center gap-4 mb-8">
-                <span className="flex-none w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center font-black text-black shadow-lg shadow-orange-500/20">
+                <span className="flex-none w-10 h-10 bg-linear-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center font-black text-black shadow-lg shadow-orange-500/20">
                   01
                 </span>
                 <h2 className="text-xl font-bold text-white tracking-tight">
@@ -120,13 +124,13 @@ const TopUpDetail = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-500 ml-1 uppercase tracking-widest">
+                  <label className="text-xs font-bold text-slate-500 ml-1  uppercase tracking-widest">
                     User ID
                   </label>
                   <input
                     type="text"
-                    placeholder="..."
-                    className="w-full bg-white/[0.03] border border-white/10 p-4 rounded-2xl focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all placeholder:text-slate-700 font-mono"
+                    placeholder="Pastikan USER_ID sesuai"
+                    className="w-full bg-white/3 border border-white/10 p-4 rounded-2xl focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all placeholder:text-slate-700 font-mono mt-5"
                     value={userId}
                     onChange={(e) => setUserId(e.target.value)}
                   />
@@ -137,8 +141,9 @@ const TopUpDetail = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="..."
-                    className="w-full bg-white/[0.03] border border-white/10 p-4 rounded-2xl focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all placeholder:text-slate-700 font-mono"
+                    placeholder="Pastikan Zone_ID sesuai
+                    "
+                    className="w-full bg-white/3 border border-white/10 p-4 rounded-2xl focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10 outline-none transition-all placeholder:text-slate-700 font-mono mt-5"
                     value={zoneId}
                     onChange={(e) => setZoneId(e.target.value)}
                   />
@@ -147,9 +152,9 @@ const TopUpDetail = () => {
             </section>
 
             {/* STEP 2: NOMINAL */}
-            <section className="bg-white/[0.02] p-8 rounded-[2.5rem] border border-white/5">
+            <section className="bg-white/2 p-8 rounded-[2.5rem] border border-white/5">
               <div className="flex items-center gap-4 mb-8">
-                <span className="flex-none w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center font-black text-black shadow-lg shadow-orange-500/20">
+                <span className="flex-none w-10 h-10 bg-linear-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center font-black text-black shadow-lg shadow-orange-500/20">
                   02
                 </span>
                 <h2 className="text-xl font-bold text-white tracking-tight">
@@ -164,32 +169,45 @@ const TopUpDetail = () => {
                   ))}
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols- sm:grid-cols-3 gap-3 md:gap-4">
                   {products?.map((item) => (
                     <motion.div
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       key={item.id}
                       onClick={() => setSelectedProduct(item)}
-                      className={`relative group p-5 rounded-3xl border-2 transition-all cursor-pointer flex flex-col justify-center items-center text-center overflow-hidden ${
+                      className={`relative group p-4 rounded-4xl border-2 transition-all cursor-pointer flex flex-col justify-center items-center text-center overflow-hidden ${
                         selectedProduct?.id === item.id
                           ? "bg-orange-500/10 border-orange-500 shadow-xl shadow-orange-500/10"
-                          : "bg-white/[0.03] border-white/5 hover:border-white/10"
+                          : "bg-white/3 border-white/5 hover:border-white/10"
                       }`}
                     >
-                      <p
-                        className={`font-bold text-sm mb-1 transition-colors ${selectedProduct?.id === item.id ? "text-orange-400" : "text-slate-300"}`}
-                      >
-                        {item.name}
-                      </p>
-                      <p className="text-[11px] font-black text-slate-500 tracking-wider">
-                        Rp {Number(item.price).toLocaleString("id-ID")}
-                      </p>
+                      {/* ICON CURRENCY KECIL */}
+                      <div className="flex items-center justify-center gap-x-3">
+                        <span className="text-xl mb-2 filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+                          <img
+                            src={item.currency_icon}
+                            alt="gambar"
+                            className="size-8"
+                          />
+                        </span>
+                        <div>
+                          <p
+                            className={`font-bold text-[13px] mb-1 transition-colors ${selectedProduct?.id === item.id ? "text-orange-400" : "text-slate-300"}`}
+                          >
+                            {item.name}
+                          </p>
+
+                          <p className="text-[10px] font-black text-slate-500 tracking-wider">
+                            Rp {Number(item.price).toLocaleString("id-ID")}
+                          </p>
+                        </div>
+                      </div>
 
                       {selectedProduct?.id === item.id && (
                         <motion.div
-                          layoutId="active-bg"
-                          className="absolute top-2 right-2 w-2 h-2 bg-orange-500 rounded-full"
+                          layoutId="active-dot"
+                          className="absolute top-3 right-3 w-1.5 h-1.5 bg-orange-500 rounded-full"
                         />
                       )}
                     </motion.div>
@@ -202,9 +220,9 @@ const TopUpDetail = () => {
             <div className="sticky bottom-6 lg:relative">
               <button
                 disabled={!userId || !selectedProduct}
-                className={`group w-full py-5 rounded-[2rem] font-black text-sm uppercase tracking-[0.2em] transition-all shadow-2xl flex items-center justify-center gap-3 overflow-hidden relative ${
+                className={`group w-full py-5 rounded-4xl font-black text-sm uppercase tracking-[0.2em] transition-all shadow-2xl flex items-center justify-center gap-3 overflow-hidden relative ${
                   userId && selectedProduct
-                    ? "bg-gradient-to-r from-orange-400 to-orange-600 text-black hover:shadow-orange-500/40"
+                    ? "bg-linear-to-r from-orange-400 to-orange-600 text-black hover:shadow-orange-500/40"
                     : "bg-white/5 text-slate-600 cursor-not-allowed border border-white/5"
                 }`}
               >
