@@ -32,7 +32,7 @@ const Sidebar = () => {
       icon: <ShoppingCart size={20} />,
     },
     { name: "Daftar Harga", href: "/harga", icon: <Tag size={20} /> },
-    { name: "Tentang Kami", href: "/about", icon: <User size={20} /> },
+
     { name: "Pusat Bantuan", href: "/faq", icon: <HelpCircle size={20} /> },
   ];
 
@@ -59,7 +59,7 @@ const Sidebar = () => {
           <Logo />
         </div>
 
-        <div className="lg:hidden flex justify-between items-center mb-8">
+        <div className="xl:hidden flex justify-between items-center mb-8">
           <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">
             Menu Navigasi
           </span>

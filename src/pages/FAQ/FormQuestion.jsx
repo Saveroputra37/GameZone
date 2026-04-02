@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebar from "../../components/Navbar"; // Pastikan path benar
+import Sidebar from "../../components/Sidebar"; // Pastikan path benar
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronDown,

@@ -1,10 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
-// Perhatikan perubahan di bawah ini:
 import { ClerkProvider } from "@clerk/clerk-react";
+// Import QueryClientProvider di sini
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const key = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+const clients = new QueryClient();
 
 if (!key) {
   throw new Error("Missing Publishable Key");
@@ -12,8 +14,11 @@ if (!key) {
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ClerkProvider publishableKey={key}>
-      <App />
-    </ClerkProvider>
+    {/* Gunakan QueryClientProvider, bukan QueryClient langsung */}
+    <QueryClientProvider client={clients}>
+      <ClerkProvider publishableKey={key}>
+        <App />
+      </ClerkProvider>
+    </QueryClientProvider>
   </StrictMode>,
 );
