@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Logo = ({ className = "h-10" }) => {
   return (
@@ -26,9 +27,11 @@ const Logo = ({ className = "h-10" }) => {
       </div>
 
       {/* Teks Logo */}
-      <span className="text-xl md:text-2xl font-black tracking-tighter text-white">
-        GAMEZONE<span className="text-orange-500 font-mono">.ID</span>
-      </span>
+      <Link to="/">
+        <span className="text-xl md:text-2xl font-black tracking-tighter text-white">
+          GAMEZONE<span className="text-orange-500 font-mono">.ID</span>
+        </span>
+      </Link>
     </div>
   );
 };

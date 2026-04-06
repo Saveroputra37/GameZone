@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../../components/Sidebar";
-import MainContent from "../../components/MainContent";
+import MainContent from "../../components/Maincontent";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,6 +16,7 @@ const Home = () => {
       <main className="flex-1 lg:ml-72 w-full overflow-x-hidden">
         <MainContent />
       </main>
+
     </div>
   );
 };

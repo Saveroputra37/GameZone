@@ -7,24 +7,30 @@ export const useAuthLogic = () => {
   const [error, setError] = useState("");
 
   // Step 1: Pendaftaran
-  const handleRegister = async (emailAddress, password, username) => {
-    if (!isLoaded) return;
-    try {
-      // Pastikan username dikirim dengan benar
-      await signUp.create({
-        emailAddress,
-        password,
-        username, // Clerk otomatis memetakan ini jika fitur username aktif
-      });
+const handleRegister = async (emailAddress, password, username) => {
+  if (!isLoaded) return;
+  try {
+    // Hapus firstName karena menyebabkan error 422
+    await signUp.create({
+      emailAddress,
+      password,
+      username,
+      unsafeMetadata: {
+        role: "free_user",
+      },
+    });
 
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-      setPendingVerification(true);
-      setError("");
-    } catch (err) {
-      // Penanganan error yang lebih aman
-      setError(err.errors?.[0]?.message || "Terjadi kesalahan saat mendaftar");
-    }
-  };
+    await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+    setPendingVerification(true);
+    setError("");
+  } catch (err) {
+    console.error("Clerk Error Details:", err);
+    // Menampilkan pesan error yang lebih jelas dari Clerk
+    setError(
+      err.errors?.[0]?.longMessage || "Gagal mendaftar. Silakan cek data Anda.",
+    );
+  }
+};
 
   // Google OAuth
   const signInWithGoogle = async () => {

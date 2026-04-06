@@ -192,8 +192,13 @@ const Sidebar = ({ searchQuery, setSearchQuery }) => {
               <div
                 role="button"
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className={`flex items-center gap-4 px-5 py-4 bg-linear-to-br from-orange-500 to-orange-700 cursor-pointer rounded-3xl shadow-[0_10px_25px_rgba(234,88,12,0.3)] border border-orange-400/30 transition-all duration-500 group ${isProfileOpen ? "ring-4 ring-orange-500/20" : "hover:scale-[1.02]"}`}
+                className={`flex items-center gap-4 px-5 py-5 bg-linear-to-br from-orange-500 to-orange-700 cursor-pointer rounded-3xl shadow-[0_10px_25px_rgba(234,88,12,0.3)] border border-orange-400/30 transition-all duration-500 group ${
+                  isProfileOpen
+                    ? "ring-4 ring-orange-500/20"
+                    : "hover:scale-[1.02]"
+                }`}
               >
+                {/* Foto Profil */}
                 <div className="w-12 h-12 rounded-full border-2 border-white/80 overflow-hidden shrink-0 shadow-inner">
                   <img
                     src={user.imageUrl}
@@ -201,11 +206,29 @@ const Sidebar = ({ searchQuery, setSearchQuery }) => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="overflow-hidden text-left flex-1">
-                  <p className="text-sm font-black capitalize text-white truncate leading-tight tracking-tight">
-                    {user.username || user.firstName}
-                  </p>
-                  <p className="text-[11px] font-bold text-orange-100/80 truncate mt-1">
+
+                {/* Info User & Badge Role */}
+                <div className="overflow-hidden text-left flex-1 flex flex-col gap-1">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-black capitalize text-white truncate leading-none tracking-tight">
+                      {user.username || user.firstName}
+                    </p>
+
+                    {/* BADGE ROLE DI DALAM BUTTON */}
+                    <span
+                      style={{
+                        backgroundColor: "rgba(255, 255, 255, 0.2)",
+                        color: "#ffffff",
+                        backdropFilter: "blur(4px)",
+                        boxShadow: "0 0 10px rgba(255, 255, 255, 0.1)", // Glow tipis
+                      }}
+                      className="px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-[0.15em] border border-white/20 shadow-sm"
+                    >
+                      {user?.publicMetadata?.role || "User"}
+                    </span>
+                  </div>
+
+                  <p className="text-[10px] font-bold text-orange-100/70 truncate">
                     {user.primaryEmailAddress?.emailAddress}
                   </p>
                 </div>
@@ -248,7 +271,7 @@ const Sidebar = ({ searchQuery, setSearchQuery }) => {
             </NavLink>
           )}
           <p className="text-[10px] text-center text-gray-600 mt-8 font-black tracking-[0.3em] uppercase italic opacity-40">
-            v.1.0.2 Opiion App
+            v.1.0.2 Gamezone App
           </p>
         </div>
       </aside>
