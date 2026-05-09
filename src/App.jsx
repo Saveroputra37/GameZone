@@ -8,6 +8,7 @@ import LayoutLogin from "./pages/login/layoutlogin";
 import Home from "./pages/home/home";
 import FAQPage from "./pages/FAQ/FormQuestion";
 import TopUpDetail from "./pages/Topupdetail/TopUpDetail";
+import PaymentSuccess from "./pages/PaymentSuccess";
 import ChatModal from "./utils/Chatmodal";
 import SupportIcon from "./assets/customer-service.png";
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/topup/:slug" element={<TopUpDetail />} />
+        <Route path="/payment-success/:id" element={<PaymentSuccess />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 

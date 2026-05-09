@@ -6,8 +6,13 @@ import PopularGames from "../utils/PopularGame";
 import MainContentSkeleton from "../utils/SkeletonLoading/MainContentSkeleton";
 import { useCategories } from "../hooks/useCategories";
 import { useNavigate } from "react-router-dom"; // Tambahkan ini
+import { useUser } from "@clerk/clerk-react";
+import { motion } from "framer-motion";
+import { LogIn, Sparkles, Star } from "lucide-react";
 const MainContent = ({ searchQuery = "" }) => {
   const navigate = useNavigate();
+  const { user, isLoaded } = useUser();
+
   // 1. Ambil data dari TanStack Query (Tabel 'categories' sesuai screenshot kamu)
   const { data: allGames, isLoading, isError } = useCategories();
 
@@ -42,16 +47,75 @@ const MainContent = ({ searchQuery = "" }) => {
       <div className="w-full max-w-6xl space-y-12 md:space-y-16 animate-in fade-in duration-700">
         <PromoSlider />
 
+        {/* LOGIN BANNER - Only show for non-authenticated users */}
+        {isLoaded && !user && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="relative overflow-hidden bg-gradient-to-r from-orange-500/10 via-orange-600/5 to-orange-500/10 border border-orange-500/20 rounded-3xl p-6 md:p-8 shadow-2xl"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-transparent"></div>
+            <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex-1 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
+                  <Sparkles className="text-orange-500" size={24} />
+                  <h3 className="text-heading text-lg md:text-xl font-black text-white tracking-tight">
+                    Dapatkan Pengalaman Terbaik!
+                  </h3>
+                  <Sparkles className="text-orange-500" size={24} />
+                </div>
+                <p className="text-body text-gray-300 text-sm md:text-base leading-relaxed mb-4">
+                  Login untuk mengakses fitur Tanya AI, menyimpan riwayat
+                  transaksi, dan mendapatkan diskon eksklusif. Bergabunglah
+                  dengan ribuan gamer lainnya!
+                </p>
+                <div className="flex items-center justify-center md:justify-start gap-4 text-xs text-orange-300">
+                  <div className="flex items-center gap-1">
+                    <Star
+                      size={14}
+                      className="fill-orange-500 text-orange-500"
+                    />
+                    <span>Akses Tanya AI</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Star
+                      size={14}
+                      className="fill-orange-500 text-orange-500"
+                    />
+                    <span>Riwayat Transaksi</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Star
+                      size={14}
+                      className="fill-orange-500 text-orange-500"
+                    />
+                    <span>Diskon Eksklusif</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex-shrink-0">
+                <button
+                  onClick={() => navigate("/login")}
+                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-accent font-semibold py-4 px-8 rounded-2xl shadow-xl shadow-orange-500/25 flex items-center gap-3 transition-all duration-300 hover:scale-105 active:scale-95"
+                >
+                  <LogIn size={20} />
+                  <span>Login Sekarang</span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
         {/* --- SECTION 1: GAME TERPOPULER --- */}
         {popularResults.length > 0 && (
           <section className="space-y-6">
             <div className="flex items-center justify-between px-2">
-              <h3 className="text-xl font-black text-white italic tracking-tighter flex items-center gap-2">
+              <h3 className="text-heading text-xl font-black text-white italic tracking-tighter flex items-center gap-2">
                 <div className="w-2 h-6 bg-orange-500 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.5)]"></div>
                 GAME{" "}
                 <span className="text-orange-500 uppercase">Terpopuler</span>
               </h3>
-              <button className="text-[10px] font-black text-gray-500 hover:text-orange-500 transition-colors uppercase tracking-[0.2em] border-b border-transparent hover:border-orange-500/50 pb-1">
+              <button className="text-body text-[10px] font-semibold text-gray-500 hover:text-orange-500 transition-colors uppercase tracking-[0.2em] border-b border-transparent hover:border-orange-500/50 pb-1">
                 Lihat Semua
               </button>
             </div>

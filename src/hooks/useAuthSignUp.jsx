@@ -1,36 +1,37 @@
 import { useState } from "react";
 import { useSignUp } from "@clerk/clerk-react";
 
-export const useAuthLogic = () => {
+export const useAuthSignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
   const [pendingVerification, setPendingVerification] = useState(false);
   const [error, setError] = useState("");
 
   // Step 1: Pendaftaran
-const handleRegister = async (emailAddress, password, username) => {
-  if (!isLoaded) return;
-  try {
-    // Hapus firstName karena menyebabkan error 422
-    await signUp.create({
-      emailAddress,
-      password,
-      username,
-      unsafeMetadata: {
-        role: "free_user",
-      },
-    });
+  const handleRegister = async (emailAddress, password, username) => {
+    if (!isLoaded) return;
+    try {
+      // Hapus firstName karena menyebabkan error 422
+      await signUp.create({
+        emailAddress,
+        password,
+        username,
+        unsafeMetadata: {
+          role: "free_user",
+        },
+      });
 
-    await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-    setPendingVerification(true);
-    setError("");
-  } catch (err) {
-    console.error("Clerk Error Details:", err);
-    // Menampilkan pesan error yang lebih jelas dari Clerk
-    setError(
-      err.errors?.[0]?.longMessage || "Gagal mendaftar. Silakan cek data Anda.",
-    );
-  }
-};
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+      setPendingVerification(true);
+      setError("");
+    } catch (err) {
+      console.error("Clerk Error Details:", err);
+      // Menampilkan pesan error yang lebih jelas dari Clerk
+      setError(
+        err.errors?.[0]?.longMessage ||
+          "Gagal mendaftar. Silakan cek data Anda.",
+      );
+    }
+  };
 
   // Google OAuth
   const signInWithGoogle = async () => {
@@ -56,16 +57,28 @@ const handleRegister = async (emailAddress, password, username) => {
 
       if (completeSignUp.status === "complete") {
         await setActive({ session: completeSignUp.createdSessionId });
-        window.location.href = "/dashboard"; // Arahkan ke dashboard setelah sukses
+        window.location.href = "/"; // Arahkan ke home setelah sukses
       }
     } catch (err) {
       setError(err.errors?.[0]?.message || "Kode verifikasi salah");
     }
   };
 
+  // Resend verification code
+  const handleResendCode = async () => {
+    if (!isLoaded) return;
+    try {
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+      setError(""); // Clear any previous errors
+    } catch (err) {
+      setError(err.errors?.[0]?.message || "Gagal mengirim ulang kode");
+    }
+  };
+
   return {
     handleRegister,
     handleVerify,
+    handleResendCode,
     signInWithGoogle,
     pendingVerification,
     setPendingVerification, // Tambahkan ini agar komponen UI bisa mereset state jika perlu

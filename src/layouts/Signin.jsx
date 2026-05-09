@@ -2,13 +2,25 @@ import React, { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 import Logo from "../utils/Logo";
 import { useAuthSignIn } from "../hooks/useAuthSignIn";
+import { usePasswordReset } from "../hooks/usePasswordReset";
 
 // Tambahkan props onSignupClick agar bisa toggle di layout utama
 const Signin = ({ onSignupClick }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetCode, setResetCode] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [formdata, setFormdata] = useState({ email: "", password: "" });
 
   const { handleLogin, signInWithGoogle, error } = useAuthSignIn();
+  const {
+    handleForgotPassword,
+    handleResetPassword,
+    error: resetError,
+    success: resetSuccess,
+    isResetting,
+  } = usePasswordReset();
 
   return (
     <div className="w-full max-w-md bg-[#1e2036] rounded-[2.5rem] border border-white/5 shadow-2xl p-8 md:p-10 relative overflow-hidden">
@@ -20,10 +32,10 @@ const Signin = ({ onSignupClick }) => {
         {/* Header */}
         <div className="flex flex-col items-center mb-10">
           <Logo className="scale-125 mb-4" />
-          <h2 className="text-xl font-bold text-white my-2">
+          <h2 className="text-heading text-xl font-bold text-white my-2">
             Selamat Datang Kembali
           </h2>
-          <p className="text-gray-500 text-sm mt-1">
+          <p className="text-body text-gray-500 text-sm mt-1">
             Masuk untuk melanjutkan transaksi
           </p>
 
@@ -67,6 +79,7 @@ const Signin = ({ onSignupClick }) => {
               </label>
               <button
                 type="button"
+                onClick={() => setShowForgotPassword(true)}
                 className="text-[10px] font-bold text-orange-500 hover:underline"
               >
                 Lupa Sandi?
@@ -153,8 +166,71 @@ const Signin = ({ onSignupClick }) => {
         </button>
 
         {/* Footer: Gunakan button alih-alih anchor tag agar trigger state parent */}
-
       </div>
+
+      {/* Forgot Password Modal */}
+      {showForgotPassword && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-[#1e2036] rounded-[2.5rem] border border-white/5 shadow-2xl p-8 w-full max-w-md">
+            <div className="text-center mb-6">
+              <h3 className="text-lg font-bold text-white mb-2">
+                Reset Password
+              </h3>
+              <p className="text-gray-400 text-sm">
+                Masukkan email untuk menerima link reset password
+              </p>
+            </div>
+
+            {resetError && (
+              <p className="text-red-500 text-xs mb-4 bg-red-500/10 p-3 rounded-xl text-center border border-red-500/20">
+                {resetError}
+              </p>
+            )}
+
+            {resetSuccess && (
+              <p className="text-green-500 text-xs mb-4 bg-green-500/10 p-3 rounded-xl text-center border border-green-500/20">
+                {resetSuccess}
+              </p>
+            )}
+
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">
+                  Email
+                </label>
+                <div className="relative group">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <Mail size={18} className="text-gray-500" />
+                  </div>
+                  <input
+                    type="email"
+                    value={resetEmail}
+                    onChange={(e) => setResetEmail(e.target.value)}
+                    placeholder="nama@email.com"
+                    className="w-full bg-[#0f101f]/50 border border-white/5 rounded-2xl py-3.5 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-orange-500/50 transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowForgotPassword(false)}
+                  className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 rounded-2xl transition-all"
+                >
+                  Batal
+                </button>
+                <button
+                  onClick={() => handleForgotPassword(resetEmail)}
+                  disabled={isResetting || !resetEmail}
+                  className="flex-1 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 rounded-2xl transition-all"
+                >
+                  {isResetting ? "Mengirim..." : "Kirim Link"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

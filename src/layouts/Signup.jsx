@@ -9,7 +9,7 @@ import {
   Loader2,
 } from "lucide-react";
 import Logo from "../utils/Logo";
-import { useAuthLogic } from "../hooks/useAuthSignUp";
+import { useAuthSignUp } from "../hooks/useAuthSignUp";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,10 +24,11 @@ const Signup = () => {
   const {
     handleRegister,
     handleVerify,
+    handleResendCode,
     pendingVerification,
     signInWithGoogle,
     error,
-  } = useAuthLogic();
+  } = useAuthSignUp();
 
   // Fungsi Wrapper untuk Pendaftaran
   const onRegister = async (e) => {
@@ -70,12 +71,12 @@ const Signup = () => {
           {/* Header */}
           <div className="flex flex-col items-center mb-10">
             <Logo className="scale-125 mb-4" />
-            <h2 className="text-xl font-bold text-white my-2 text-center">
+            <h2 className="text-heading text-xl font-bold text-white my-2 text-center">
               {pendingVerification
                 ? "Verifikasi Email"
                 : "Buat Akun Baru Untuk Melanjutkan"}
             </h2>
-            <p className="text-gray-500 text-sm mt-1 text-center">
+            <p className="text-body text-gray-500 text-sm mt-1 text-center">
               {pendingVerification
                 ? `Masukkan kode yang dikirim ke ${formdata.email}`
                 : "Masuk untuk melanjutkan transaksi"}
@@ -282,9 +283,12 @@ const Signup = () => {
               </button>
               <p className="text-xs w-full text-center text-gray-500">
                 Tidak menerima kode?
-                <span className="text-orange-500 cursor-pointer font-bold ml-2 hover:underline">
+                <button
+                  onClick={handleResendCode}
+                  className="text-orange-500 font-bold ml-2 hover:underline"
+                >
                   Kirim ulang
-                </span>
+                </button>
               </p>
             </div>
           )}

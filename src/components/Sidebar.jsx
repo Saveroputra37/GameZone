@@ -86,10 +86,10 @@ const Sidebar = ({ searchQuery, setSearchQuery }) => {
               placeholder="Cari Game Favorit..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#0f101f] text-[13px] text-gray-200 placeholder-gray-600 
+              className="w-full bg-[#0f101f] text-body text-[13px] text-gray-200 placeholder-gray-600
                        rounded-2xl py-5 pl-14 pr-12 border border-white/5
-                       focus:outline-none focus:border-orange-500/40 focus:ring-8 focus:ring-orange-500/5 
-                       transition-all duration-300 shadow-inner font-bold tracking-wide"
+                       focus:outline-none focus:border-orange-500/40 focus:ring-8 focus:ring-orange-500/5
+                       transition-all duration-300 shadow-inner font-medium tracking-wide"
             />
 
             {searchQuery && (
@@ -176,7 +176,7 @@ const Sidebar = ({ searchQuery, setSearchQuery }) => {
                   >
                     {item.icon}
                   </span>
-                  <span className="text-[15px] font-black tracking-tight uppercase">
+                  <span className="text-body text-[15px] font-semibold tracking-tight uppercase">
                     {item.name}
                   </span>
                 </>
